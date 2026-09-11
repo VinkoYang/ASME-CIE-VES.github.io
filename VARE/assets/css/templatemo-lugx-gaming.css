@@ -670,7 +670,8 @@ Banner Style
   letter-spacing: 0.5px;
 }
 
-.main-banner .caption h2 {
+.main-banner .caption h2,
+.main-banner .caption h1 {
   font-size: 48px;
   color: #fff;
   margin-top: 20px;
@@ -679,7 +680,8 @@ Banner Style
   margin-bottom: 40px;
 }
 
-.main-banner .caption h2:after {
+.main-banner .caption h2:after,
+.main-banner .caption h1:after {
   position: absolute;
   background-image: url(../images/caption-dec.png);
   width: 202px;
@@ -883,15 +885,110 @@ Trending Style
   position: absolute;
   display: inline-block;
   text-align: center;
-  line-height: 40px;
-  width: 40px;
-  height: 40px;
+  line-height: 44px;
+  width: 44px;
+  height: 44px;
   background-color: #ee626b;
   color: #fff;
   border-radius: 50%;
   right: 25px;
   bottom: 25px;
   transition: all .3s;
+}
+
+/* Committee cards carry two links - a profile page and an e-mail address.
+   Group them so they sit side by side instead of stacking on the same
+   absolutely positioned corner. */
+.trending .item .down-content .links {
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+  display: flex;
+  gap: 8px;
+}
+
+.trending .item .down-content .links a {
+  position: static;
+}
+
+/* Organizer cards carry an affiliation, a session track and a visible e-mail
+   address, so their content flows in normal order rather than relying on the
+   floating corner button the other card types use. */
+.trending .item.person .down-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.trending .item.person .down-content h4 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.trending .item.person .down-content .affiliation {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #4a4a4a;
+}
+
+.trending .item.person .down-content .track {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #1e1e1e;
+}
+
+.trending .item.person .down-content .track span {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #7a7a7a;
+}
+
+/* Undo the circular-button styling for the e-mail, which is a text link. */
+.trending .item.person .down-content .email,
+.trending .item.person:hover .down-content .email {
+  position: static;
+  width: auto;
+  height: auto;
+  line-height: 1.45;
+  padding: 0;
+  border-radius: 4px;
+  background-color: transparent;
+  color: #0071f8;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.trending .item.person .down-content .email:hover {
+  color: #ee626b;
+}
+
+.trending .item.person .down-content .links {
+  position: static;
+  right: auto;
+  bottom: auto;
+  margin-top: 2px;
+}
+
+/* The reset at the top of this file clears outlines globally, which leaves
+   keyboard users with no focus indicator. Restore one for links and buttons. */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #0071f8;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.trending .item .down-content .links a:focus-visible {
+  outline-color: #1e1e1e;
 }
 
 .trending .item:hover .down-content h4 {
@@ -1170,7 +1267,8 @@ Page Header Style
   color: #fff;
 }
 
-.page-heading h3 {
+.page-heading h3,
+.page-heading h1 {
   font-size: 48px;
   text-transform: uppercase;
   color: #fff;
@@ -1673,4 +1771,109 @@ body {
 
 @media (max-width: 1200px) {
   
+}
+/*
+---------------------------------------------
+VAR-E readability layer
+Additive rules for the conference content. Kept at the end of the file so the
+original template styles above stay untouched and this pass is easy to review.
+--------------------------------------------- 
+*/
+
+/* Body copy was 14px/28px, which is small for the long call-for-papers text and
+   gives a looser line-height than the measure needs. */
+.section-heading p,
+.topic-list {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+/* The hero paragraph sits on the banner image, so it keeps the template's
+   white; only its size, rhythm and measure change here. */
+.main-banner .caption p {
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+/* At the full 1140px container these paragraphs ran to roughly 150 characters a
+   line. Cap the measure so prose stays in a comfortable reading range; headings
+   and the card grid keep the full width. */
+.section-heading p,
+.section-heading > h3,
+.topic-list {
+  max-width: 68ch;
+}
+
+.section-heading p + p {
+  margin-top: 1.1em;
+}
+
+/* Topic headings sat between a 36px h2 and body text with no styling of their
+   own, so the four call-for-papers tracks did not read as a level. */
+.section-heading h3 {
+  margin-top: 48px;
+  padding-bottom: 0;
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: #0071f8;
+  text-transform: none;
+}
+
+.section-heading h3 + p {
+  margin-top: 12px;
+}
+
+/* The topic bullets are now real lists; give them list semantics to match. */
+.topic-list {
+  margin: 16px 0 0;
+  padding-left: 1.25em;
+  list-style: disc;
+}
+
+.topic-list li {
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.topic-list li::marker {
+  color: #ee626b;
+}
+
+/* The two long track lists read better in columns on a wide screen. */
+@media (min-width: 992px) {
+  .topic-list.columns {
+    max-width: none;
+    column-count: 2;
+    column-gap: 48px;
+  }
+
+  .topic-list.columns li {
+    break-inside: avoid;
+  }
+}
+
+/* Important Dates cards lost their images, so give the remaining text room. */
+.most-played .item .down-content {
+  padding: 22px 20px;
+}
+
+.most-played .item .down-content h4 {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Respect a reduced-motion preference: the template animates on scroll and
+   transitions most interactive elements. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
