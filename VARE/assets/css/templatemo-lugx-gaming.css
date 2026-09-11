@@ -1877,3 +1877,73 @@ original template styles above stay untouched and this pass is easy to review.
     scroll-behavior: auto !important;
   }
 }
+
+/*
+---------------------------------------------
+Committee card refinements
+--------------------------------------------- 
+*/
+
+/* The portraits were sized with an inline height, so their shape changed with
+   the column width and squared off on wide screens. Lock a portrait ratio and
+   cap the card so it keeps the same proportions at every breakpoint. */
+.trending .item.person {
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.trending .item.person img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+/* The profile link was an unlabelled coral disc floating in the corner, which
+   read as a stray button rather than part of the card. Give it its words back
+   and let it sit with the rest of the content. */
+.trending .item.person .down-content .profile,
+.trending .item.person:hover .down-content .profile {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  min-height: 44px;
+  height: auto;
+  padding: 10px 18px;
+  border: 1px solid #d4d4d4;
+  border-radius: 999px;
+  background-color: transparent;
+  color: #1e1e1e;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.trending .item.person .down-content .profile i {
+  font-size: 12px;
+  color: #7a7a7a;
+  transition: color .2s ease, transform .2s ease;
+}
+
+.trending .item.person .down-content .profile:hover {
+  border-color: #0071f8;
+  background-color: #0071f8;
+  color: #fff;
+}
+
+.trending .item.person .down-content .profile:hover i {
+  color: #fff;
+  transform: translate(2px, -2px);
+}
+
+.trending .item.person .down-content .profile:active {
+  transform: translateY(1px);
+}
