@@ -2046,3 +2046,172 @@ footer .footer-legal a {
     gap: 4px 20px;
   }
 }
+
+/*
+---------------------------------------------
+Call for papers
+--------------------------------------------- 
+*/
+
+.section.schedule,
+.section.submission,
+.section.topics {
+  padding-top: 90px;
+}
+
+.section.schedule .section-heading,
+.section.submission .section-heading,
+.section.topics .section-heading {
+  margin-bottom: 40px;
+}
+
+/* Six deadline cards were squeezed into a twelve-column row alongside the
+   heading, leaving about 175px for labels like "Paper Acceptance
+   Notification". A schedule reads them in one column instead. */
+.schedule-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #e7e7e7;
+}
+
+.schedule-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 18px 4px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.schedule-list .milestone {
+  font-size: 17px;
+  font-weight: 500;
+  color: #1e1e1e;
+}
+
+.schedule-list .when {
+  font-size: 15px;
+  color: #7a7a7a;
+  font-variant-numeric: tabular-nums;
+}
+
+.schedule-list .is-conference {
+  border-bottom-width: 2px;
+  border-bottom-color: #1e1e1e;
+}
+
+.schedule-list .is-conference .milestone {
+  font-weight: 600;
+}
+
+.schedule-list .is-conference .when {
+  color: #0071f8;
+  font-weight: 600;
+}
+
+.schedule-cta {
+  margin-top: 32px;
+  text-align: left;
+}
+
+/* The two ways to submit are alternatives, so they sit side by side rather
+   than as two bullets in a list. */
+.submission-type {
+  height: 100%;
+  padding: 28px 30px;
+  border: 1px solid #e7e7e7;
+  border-radius: 18px;
+  background-color: #fafafa;
+}
+
+.submission-type h3 {
+  margin: 0 0 10px;
+  padding: 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: #1e1e1e;
+}
+
+.submission-type p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+.submission-note {
+  margin-top: 28px;
+  padding: 18px 22px;
+  border-left: 3px solid #ee626b;
+  background-color: #fafafa;
+  border-radius: 0 10px 10px 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #4a4a4a;
+  max-width: 72ch;
+}
+
+/* Four tracks previously ran together as headings and paragraphs inside one
+   block, with nothing to show where one ended and the next began. */
+.track {
+  display: block;
+  padding: 36px 0 4px;
+  border-top: 1px solid #e7e7e7;
+}
+
+.track:first-of-type {
+  border-top: 0;
+  padding-top: 8px;
+}
+
+.track-index {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #ee626b;
+}
+
+.track h3 {
+  margin: 0 0 14px;
+  padding: 0;
+  max-width: 22ch;
+  font-size: 26px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: #1e1e1e;
+  text-wrap: balance;
+}
+
+.track > p {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+.track .topic-list {
+  margin-top: 20px;
+}
+
+@media (max-width: 991px) {
+  .section.schedule,
+  .section.submission,
+  .section.topics {
+    padding-top: 60px;
+  }
+
+  .track h3 {
+    font-size: 22px;
+    max-width: none;
+  }
+
+  .submission-type {
+    margin-bottom: 20px;
+  }
+}
