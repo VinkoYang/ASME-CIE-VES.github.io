@@ -1947,3 +1947,102 @@ Committee card refinements
 .trending .item.person .down-content .profile:active {
   transform: translateY(1px);
 }
+
+/*
+---------------------------------------------
+Footer
+--------------------------------------------- 
+*/
+
+/* The footer held nothing but the template credit, on a blue that puts white
+   text at about 4.4:1 - just under the 4.5:1 minimum. A dark wash lifts it to
+   roughly 7:1 and gives the conference details somewhere to sit. */
+footer {
+  position: relative;
+  min-height: 0;
+  padding: 64px 0 48px;
+}
+
+footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, .28);
+  border-radius: 150px 150px 0 0;
+  pointer-events: none;
+}
+
+footer .container {
+  position: relative;
+  z-index: 2;
+}
+
+footer p {
+  line-height: 1.6;
+  margin: 0;
+  text-align: center;
+}
+
+footer .footer-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+footer .footer-sub {
+  margin-top: 6px;
+  font-size: 15px;
+  color: #fff;
+}
+
+footer .footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 28px;
+  margin-top: 22px;
+}
+
+footer .footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, .45);
+}
+
+footer .footer-links a:hover {
+  border-bottom-color: #fff;
+}
+
+/* The template credit stays - TemplateMo's terms require it - but it steps
+   back behind the conference's own information. */
+footer .footer-legal {
+  margin-top: 26px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #fff;
+}
+
+footer .footer-legal a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  footer {
+    padding: 48px 0 36px;
+  }
+
+  footer::before {
+    border-radius: 80px 80px 0 0;
+  }
+
+  footer .footer-links {
+    gap: 4px 20px;
+  }
+}
