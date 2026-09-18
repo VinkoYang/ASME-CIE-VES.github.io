@@ -1842,18 +1842,6 @@ original template styles above stay untouched and this pass is easy to review.
   color: #ee626b;
 }
 
-/* The two long track lists read better in columns on a wide screen. */
-@media (min-width: 992px) {
-  .topic-list.columns {
-    max-width: none;
-    column-count: 2;
-    column-gap: 48px;
-  }
-
-  .topic-list.columns li {
-    break-inside: avoid;
-  }
-}
 
 /* Important Dates cards lost their images, so give the remaining text room. */
 .most-played .item .down-content {
@@ -2053,21 +2041,67 @@ Call for papers
 --------------------------------------------- 
 */
 
+/* The template's .section adds a 120px margin on top of this padding, which
+   left over 200px of empty space between the three parts of the page. */
 .section.schedule,
 .section.submission,
 .section.topics {
+  margin-top: 0;
+  padding-top: 110px;
+}
+
+.section.schedule {
   padding-top: 90px;
 }
 
-.section.schedule .section-heading,
-.section.submission .section-heading,
-.section.topics .section-heading {
-  margin-bottom: 40px;
+/* Prose is capped at a readable measure, and with everything left-aligned in
+   the 1140px container that left the right third of the page empty. Each part
+   is now a two-column block: its heading on the left, its content on the right,
+   so the readable measure and the container width agree. The home page uses
+   the same block for its About and countdown sections. */
+.split-block {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: 64px;
+  align-items: start;
 }
 
-/* Six deadline cards were squeezed into a twelve-column row alongside the
-   heading, leaving about 175px for labels like "Paper Acceptance
-   Notification". A schedule reads them in one column instead. */
+/* Content that needs more width than the right column, such as the two
+   submission cards, spans both columns under the block. */
+.split-full {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+}
+
+.split-main {
+  min-width: 0;
+}
+
+.split-main > :first-child {
+  margin-top: 0;
+}
+
+.split-block .section-heading {
+  margin-bottom: 0;
+}
+
+.split-aside.section-heading h2 {
+  margin-top: 0;
+}
+
+.split-aside.section-heading p {
+  margin-top: 16px;
+  font-size: 15px;
+  color: #6a6a6a;
+}
+
+.split-main .section-heading p,
+.split-main .topic-list,
+.split-main > p {
+  max-width: 68ch;
+}
+
+/* A schedule reads as one column of milestone and date pairs. */
 .schedule-list {
   margin: 0;
   padding: 0;
@@ -2116,11 +2150,16 @@ Call for papers
   text-align: left;
 }
 
-/* The two ways to submit are alternatives, so they sit side by side rather
-   than as two bullets in a list. */
+/* The two ways to submit are alternatives, so they sit side by side. */
+.submission-types {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+
 .submission-type {
-  height: 100%;
-  padding: 28px 30px;
+  padding: 26px 28px;
   border: 1px solid #e7e7e7;
   border-radius: 18px;
   background-color: #fafafa;
@@ -2142,7 +2181,7 @@ Call for papers
 }
 
 .submission-note {
-  margin-top: 28px;
+  margin-top: 20px;
   padding: 18px 22px;
   border-left: 3px solid #ee626b;
   background-color: #fafafa;
@@ -2150,24 +2189,19 @@ Call for papers
   font-size: 15px;
   line-height: 1.7;
   color: #4a4a4a;
-  max-width: 72ch;
 }
 
-/* Four tracks previously ran together as headings and paragraphs inside one
-   block, with nothing to show where one ended and the next began. */
+/* A track's title runs the full width so it stays on one line. Below it the
+   description and the topic list sit side by side, the list in a narrower
+   column and a smaller size because it supports the description. */
 .track {
-  display: block;
-  padding: 36px 0 4px;
+  margin-top: 48px;
+  padding-top: 44px;
   border-top: 1px solid #e7e7e7;
 }
 
-.track:first-of-type {
-  border-top: 0;
-  padding-top: 8px;
-}
-
 .track-index {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: .1em;
@@ -2176,18 +2210,164 @@ Call for papers
 }
 
 .track h3 {
-  margin: 0 0 14px;
+  margin: 0;
   padding: 0;
-  max-width: 22ch;
-  font-size: 26px;
-  line-height: 1.25;
+  font-size: 24px;
+  line-height: 1.3;
   font-weight: 600;
   letter-spacing: -.01em;
   color: #1e1e1e;
   text-wrap: balance;
 }
 
-.track > p {
+.track-head {
+  margin-bottom: 24px;
+}
+
+.track-body {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  column-gap: 64px;
+  align-items: start;
+}
+
+.track-body > p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+/* A track without a topic list would leave the list column empty, so its
+   description spreads across two text columns instead. */
+@media (min-width: 992px) {
+  .track-body > p:only-child {
+    grid-column: 1 / -1;
+    max-width: none;
+    column-count: 2;
+    column-gap: 64px;
+  }
+}
+
+.track-topics {
+  padding: 22px 26px;
+  border-radius: 14px;
+  background-color: #fafafa;
+}
+
+.topic-label {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #7a7a7a;
+}
+
+.track-body .topic-list {
+  max-width: none;
+  margin: 0;
+  padding: 0 0 0 1.1em;
+  list-style: disc;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3d3d3d;
+}
+
+/* The template reset sets list-style: none on li itself, so the bullet has to
+   be restored on the item, not only on the list. */
+.track-body .topic-list li {
+  margin: 0;
+  padding-left: 4px;
+  list-style: disc;
+}
+
+.track-body .topic-list li::marker {
+  color: #ee626b;
+}
+
+.track-body .topic-list li + li {
+  margin-top: 10px;
+}
+
+@media (max-width: 991px) {
+  .section.schedule,
+  .section.submission,
+  .section.topics {
+    padding-top: 64px;
+  }
+
+  .split-block {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 24px;
+  }
+
+  .track {
+    margin-top: 36px;
+    padding-top: 32px;
+  }
+
+  .track h3 {
+    font-size: 22px;
+  }
+
+  .track-body {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 28px;
+  }
+
+  .submission-types {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/*
+---------------------------------------------
+Home page
+--------------------------------------------- 
+*/
+
+/* The long introduction used to sit in the banner, capped at 70ch, which left
+   the right half of the banner empty. The banner now carries only the name,
+   place and date, and the introduction has its own section below. */
+.main-banner {
+  padding: 200px 0 190px;
+}
+
+.main-banner .caption p.banner-meta {
+  margin: 0 0 40px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+}
+
+.banner-link {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, .5);
+  padding-bottom: 2px;
+  transition: border-color .2s;
+}
+
+.banner-link:hover,
+.banner-link:focus-visible {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+.section.about {
+  margin-top: 110px;
+}
+
+.split-main > p:not([class]) {
   margin: 0;
   max-width: 68ch;
   font-size: 16px;
@@ -2195,23 +2375,359 @@ Call for papers
   color: #4a4a4a;
 }
 
-.track .topic-list {
-  margin-top: 20px;
+.split-main > p:not([class]) + p:not([class]) {
+  margin-top: 1.1em;
+}
+
+/* Four countdown cells took eight of twelve columns and left the rest of the
+   band empty. They now share the content column evenly. */
+.countdown-band {
+  margin-top: 110px;
+  padding: 90px 0;
+}
+
+.countdown-band .split-aside {
+  align-self: center;
+  text-align: left;
+}
+
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.countdown li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 26px 24px;
+  border-radius: 18px;
+  background-color: #fff;
+}
+
+.countdown-value {
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: #1e1e1e;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-unit {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #ee626b;
 }
 
 @media (max-width: 991px) {
-  .section.schedule,
-  .section.submission,
-  .section.topics {
-    padding-top: 60px;
+  .main-banner {
+    padding: 150px 0 140px;
+  }
+
+  .banner-actions {
+    justify-content: center;
+  }
+
+  .section.about,
+  .countdown-band {
+    margin-top: 72px;
+  }
+
+  .countdown-band {
+    padding: 56px 0;
+    border-radius: 48px;
+  }
+
+  .countdown {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .countdown-value {
+    font-size: 36px;
+  }
+}
+
+/*
+---------------------------------------------
+Reading comfort
+--------------------------------------------- 
+*/
+
+/* Poppins is a wide face with a small x-height relative to its width, so the
+   15-16px body copy used across the site read small and packed, and 12px labels
+   were close to unreadable. Everything below raises one step on a single scale:
+   18px prose, 17px secondary text, 13-14px labels, with looser leading and more
+   room between blocks. Later rules win, so the earlier sizes can stay put. */
+
+/* Prose */
+.section-heading p,
+.split-main > p:not([class]),
+.track-body > p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #3d3d3d;
+}
+
+.section-heading p,
+.split-main > p:not([class]),
+.track-body > p {
+  max-width: 64ch;
+}
+
+.section-heading p + p,
+.split-main > p:not([class]) + p:not([class]) {
+  margin-top: 1.25em;
+}
+
+/* Headings */
+.section-heading h2 {
+  font-size: 40px;
+  line-height: 1.2;
+}
+
+.split-aside.section-heading p {
+  margin-top: 20px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #5a5a5a;
+}
+
+.track h3 {
+  font-size: 30px;
+}
+
+.track-index,
+.countdown-unit {
+  font-size: 13px;
+}
+
+/* Tracks and topic lists */
+.track {
+  margin-top: 64px;
+  padding-top: 56px;
+}
+
+
+/* Important dates */
+.schedule-list li {
+  padding: 22px 4px;
+}
+
+.schedule-list .milestone {
+  font-size: 18px;
+}
+
+.schedule-list .when {
+  font-size: 16px;
+}
+
+/* Submission types */
+.submission-types {
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.submission-type {
+  padding: 32px;
+}
+
+.submission-type h3 {
+  margin-bottom: 14px;
+  font-size: 21px;
+}
+
+.submission-type p,
+.submission-note {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #3d3d3d;
+}
+
+.submission-note {
+  margin-top: 28px;
+  padding: 22px 26px;
+}
+
+/* Home page banner */
+.main-banner .caption p.banner-meta {
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+.banner-link {
+  font-size: 16px;
+}
+
+/* Committee cards */
+.trending .item.person .down-content {
+  gap: 10px;
+}
+
+.trending .item.person .down-content h4 {
+  font-size: 21px;
+}
+
+.trending .item .down-content span.category {
+  font-size: 15px;
+}
+
+.trending .item.person .down-content .affiliation {
+  font-size: 16px;
+}
+
+.trending .item.person .down-content .track {
+  font-size: 16px;
+}
+
+.trending .item.person .down-content .track span {
+  font-size: 13px;
+}
+
+.trending .item.person .down-content .email,
+.trending .item.person:hover .down-content .email {
+  font-size: 15px;
+}
+
+.trending .item.person .down-content .profile,
+.trending .item.person:hover .down-content .profile {
+  font-size: 15px;
+}
+
+/* Footer */
+footer .footer-sub,
+footer .footer-links a {
+  font-size: 16px;
+}
+
+footer .footer-legal {
+  font-size: 14px;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .split-aside.section-heading h2 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 991px) {
+  .section-heading p,
+  .split-main > p:not([class]),
+  .track-body > p {
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .section-heading h2 {
+    font-size: 32px;
   }
 
   .track h3 {
-    font-size: 22px;
-    max-width: none;
+    font-size: 24px;
+  }
+
+  .track {
+    margin-top: 44px;
+    padding-top: 40px;
   }
 
   .submission-type {
-    margin-bottom: 20px;
+    padding: 26px;
+  }
+
+  .submission-type p,
+  .submission-note {
+    font-size: 16px;
+  }
+}
+
+/*
+---------------------------------------------
+Special session
+--------------------------------------------- 
+*/
+
+.section.special {
+  margin-top: 0;
+  padding-top: 110px;
+}
+
+.section.special .split-aside h6 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  letter-spacing: .1em;
+}
+
+@media (max-width: 991px) {
+  .section.special {
+    padding-top: 64px;
+  }
+}
+
+/* Logo: the VARE headset mark (logo-mark.png, derived from VARE-logo.png as
+   white line art at 3x) next to a live-text wordmark. The template sized a single
+   logo image with max-width rules, so the mark and word get explicit heights
+   here that match the old image in the full, scrolled and mobile headers. */
+.header-area .main-nav .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.header-area .main-nav .logo .logo-mark {
+  width: auto;
+  max-width: none;
+  height: 64px;
+  overflow: visible;
+}
+
+.header-area .main-nav .logo .logo-word {
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .04em;
+  color: #fff;
+}
+
+.header-area .main-nav .logo:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+  border-radius: 6px;
+}
+
+/* Line the logo up with the centre of the nav links in the unscrolled header. */
+@media (min-width: 993px) {
+  .header-area:not(.background-header) .main-nav .logo {
+    margin-top: -2px;
+  }
+
+  .background-header .main-nav .logo {
+    margin-top: 16px;
+  }
+}
+
+.background-header .main-nav .logo .logo-mark {
+  height: 48px;
+}
+
+.background-header .main-nav .logo .logo-word {
+  font-size: 26px;
+}
+
+@media (max-width: 992px) {
+  .header-area .main-nav .logo .logo-mark {
+    height: 48px;
+  }
+
+  .header-area .main-nav .logo .logo-word {
+    font-size: 26px;
   }
 }
