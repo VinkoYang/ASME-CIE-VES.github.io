@@ -670,7 +670,8 @@ Banner Style
   letter-spacing: 0.5px;
 }
 
-.main-banner .caption h2 {
+.main-banner .caption h2,
+.main-banner .caption h1 {
   font-size: 48px;
   color: #fff;
   margin-top: 20px;
@@ -679,7 +680,8 @@ Banner Style
   margin-bottom: 40px;
 }
 
-.main-banner .caption h2:after {
+.main-banner .caption h2:after,
+.main-banner .caption h1:after {
   position: absolute;
   background-image: url(../images/caption-dec.png);
   width: 202px;
@@ -883,15 +885,110 @@ Trending Style
   position: absolute;
   display: inline-block;
   text-align: center;
-  line-height: 40px;
-  width: 40px;
-  height: 40px;
+  line-height: 44px;
+  width: 44px;
+  height: 44px;
   background-color: #ee626b;
   color: #fff;
   border-radius: 50%;
   right: 25px;
   bottom: 25px;
   transition: all .3s;
+}
+
+/* Committee cards carry two links - a profile page and an e-mail address.
+   Group them so they sit side by side instead of stacking on the same
+   absolutely positioned corner. */
+.trending .item .down-content .links {
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+  display: flex;
+  gap: 8px;
+}
+
+.trending .item .down-content .links a {
+  position: static;
+}
+
+/* Organizer cards carry an affiliation, a session track and a visible e-mail
+   address, so their content flows in normal order rather than relying on the
+   floating corner button the other card types use. */
+.trending .item.person .down-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.trending .item.person .down-content h4 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.trending .item.person .down-content .affiliation {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #4a4a4a;
+}
+
+.trending .item.person .down-content .track {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #1e1e1e;
+}
+
+.trending .item.person .down-content .track span {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #7a7a7a;
+}
+
+/* Undo the circular-button styling for the e-mail, which is a text link. */
+.trending .item.person .down-content .email,
+.trending .item.person:hover .down-content .email {
+  position: static;
+  width: auto;
+  height: auto;
+  line-height: 1.45;
+  padding: 0;
+  border-radius: 4px;
+  background-color: transparent;
+  color: #0071f8;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.trending .item.person .down-content .email:hover {
+  color: #ee626b;
+}
+
+.trending .item.person .down-content .links {
+  position: static;
+  right: auto;
+  bottom: auto;
+  margin-top: 2px;
+}
+
+/* The reset at the top of this file clears outlines globally, which leaves
+   keyboard users with no focus indicator. Restore one for links and buttons. */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #0071f8;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.trending .item .down-content .links a:focus-visible {
+  outline-color: #1e1e1e;
 }
 
 .trending .item:hover .down-content h4 {
@@ -1170,7 +1267,8 @@ Page Header Style
   color: #fff;
 }
 
-.page-heading h3 {
+.page-heading h3,
+.page-heading h1 {
   font-size: 48px;
   text-transform: uppercase;
   color: #fff;
@@ -1673,4 +1771,963 @@ body {
 
 @media (max-width: 1200px) {
   
+}
+/*
+---------------------------------------------
+VAR-E readability layer
+Additive rules for the conference content. Kept at the end of the file so the
+original template styles above stay untouched and this pass is easy to review.
+--------------------------------------------- 
+*/
+
+/* Body copy was 14px/28px, which is small for the long call-for-papers text and
+   gives a looser line-height than the measure needs. */
+.section-heading p,
+.topic-list {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+/* The hero paragraph sits on the banner image, so it keeps the template's
+   white; only its size, rhythm and measure change here. */
+.main-banner .caption p {
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+/* At the full 1140px container these paragraphs ran to roughly 150 characters a
+   line. Cap the measure so prose stays in a comfortable reading range; headings
+   and the card grid keep the full width. */
+.section-heading p,
+.section-heading > h3,
+.topic-list {
+  max-width: 68ch;
+}
+
+.section-heading p + p {
+  margin-top: 1.1em;
+}
+
+/* Topic headings sat between a 36px h2 and body text with no styling of their
+   own, so the four call-for-papers tracks did not read as a level. */
+.section-heading h3 {
+  margin-top: 48px;
+  padding-bottom: 0;
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: #0071f8;
+  text-transform: none;
+}
+
+.section-heading h3 + p {
+  margin-top: 12px;
+}
+
+/* The topic bullets are now real lists; give them list semantics to match. */
+.topic-list {
+  margin: 16px 0 0;
+  padding-left: 1.25em;
+  list-style: disc;
+}
+
+.topic-list li {
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.topic-list li::marker {
+  color: #ee626b;
+}
+
+
+/* Important Dates cards lost their images, so give the remaining text room. */
+.most-played .item .down-content {
+  padding: 22px 20px;
+}
+
+.most-played .item .down-content h4 {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Respect a reduced-motion preference: the template animates on scroll and
+   transitions most interactive elements. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+---------------------------------------------
+Committee card refinements
+--------------------------------------------- 
+*/
+
+/* The portraits were sized with an inline height, so their shape changed with
+   the column width and squared off on wide screens. Lock a portrait ratio and
+   cap the card so it keeps the same proportions at every breakpoint. */
+.trending .item.person {
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.trending .item.person img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+/* The profile link was an unlabelled coral disc floating in the corner, which
+   read as a stray button rather than part of the card. Give it its words back
+   and let it sit with the rest of the content. */
+.trending .item.person .down-content .profile,
+.trending .item.person:hover .down-content .profile {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  min-height: 44px;
+  height: auto;
+  padding: 10px 18px;
+  border: 1px solid #d4d4d4;
+  border-radius: 999px;
+  background-color: transparent;
+  color: #1e1e1e;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.trending .item.person .down-content .profile i {
+  font-size: 12px;
+  color: #7a7a7a;
+  transition: color .2s ease, transform .2s ease;
+}
+
+.trending .item.person .down-content .profile:hover {
+  border-color: #0071f8;
+  background-color: #0071f8;
+  color: #fff;
+}
+
+.trending .item.person .down-content .profile:hover i {
+  color: #fff;
+  transform: translate(2px, -2px);
+}
+
+.trending .item.person .down-content .profile:active {
+  transform: translateY(1px);
+}
+
+/*
+---------------------------------------------
+Footer
+--------------------------------------------- 
+*/
+
+/* The footer held nothing but the template credit, on a blue that puts white
+   text at about 4.4:1 - just under the 4.5:1 minimum. A dark wash lifts it to
+   roughly 7:1 and gives the conference details somewhere to sit. */
+footer {
+  position: relative;
+  min-height: 0;
+  padding: 64px 0 48px;
+}
+
+footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, .28);
+  border-radius: 150px 150px 0 0;
+  pointer-events: none;
+}
+
+footer .container {
+  position: relative;
+  z-index: 2;
+}
+
+footer p {
+  line-height: 1.6;
+  margin: 0;
+  text-align: center;
+}
+
+footer .footer-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+footer .footer-sub {
+  margin-top: 6px;
+  font-size: 15px;
+  color: #fff;
+}
+
+footer .footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 28px;
+  margin-top: 22px;
+}
+
+footer .footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, .45);
+}
+
+footer .footer-links a:hover {
+  border-bottom-color: #fff;
+}
+
+/* The template credit stays - TemplateMo's terms require it - but it steps
+   back behind the conference's own information. */
+footer .footer-legal {
+  margin-top: 26px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #fff;
+}
+
+footer .footer-legal a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  footer {
+    padding: 48px 0 36px;
+  }
+
+  footer::before {
+    border-radius: 80px 80px 0 0;
+  }
+
+  footer .footer-links {
+    gap: 4px 20px;
+  }
+}
+
+/*
+---------------------------------------------
+Call for papers
+--------------------------------------------- 
+*/
+
+/* The template's .section adds a 120px margin on top of this padding, which
+   left over 200px of empty space between the three parts of the page. */
+.section.schedule,
+.section.submission,
+.section.topics {
+  margin-top: 0;
+  padding-top: 110px;
+}
+
+.section.schedule {
+  padding-top: 90px;
+}
+
+/* Prose is capped at a readable measure, and with everything left-aligned in
+   the 1140px container that left the right third of the page empty. Each part
+   is now a two-column block: its heading on the left, its content on the right,
+   so the readable measure and the container width agree. The home page uses
+   the same block for its About and countdown sections. */
+.split-block {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: 64px;
+  align-items: start;
+}
+
+/* Content that needs more width than the right column, such as the two
+   submission cards, spans both columns under the block. */
+.split-full {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+}
+
+.split-main {
+  min-width: 0;
+}
+
+.split-main > :first-child {
+  margin-top: 0;
+}
+
+.split-block .section-heading {
+  margin-bottom: 0;
+}
+
+.split-aside.section-heading h2 {
+  margin-top: 0;
+}
+
+.split-aside.section-heading p {
+  margin-top: 16px;
+  font-size: 15px;
+  color: #6a6a6a;
+}
+
+.split-main .section-heading p,
+.split-main .topic-list,
+.split-main > p {
+  max-width: 68ch;
+}
+
+/* A schedule reads as one column of milestone and date pairs. */
+.schedule-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #e7e7e7;
+}
+
+.schedule-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 18px 4px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.schedule-list .milestone {
+  font-size: 17px;
+  font-weight: 500;
+  color: #1e1e1e;
+}
+
+.schedule-list .when {
+  font-size: 15px;
+  color: #7a7a7a;
+  font-variant-numeric: tabular-nums;
+}
+
+.schedule-list .is-conference {
+  border-bottom-width: 2px;
+  border-bottom-color: #1e1e1e;
+}
+
+.schedule-list .is-conference .milestone {
+  font-weight: 600;
+}
+
+.schedule-list .is-conference .when {
+  color: #0071f8;
+  font-weight: 600;
+}
+
+.schedule-cta {
+  margin-top: 32px;
+  text-align: left;
+}
+
+/* The two ways to submit are alternatives, so they sit side by side. */
+.submission-types {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.submission-type {
+  padding: 26px 28px;
+  border: 1px solid #e7e7e7;
+  border-radius: 18px;
+  background-color: #fafafa;
+}
+
+.submission-type h3 {
+  margin: 0 0 10px;
+  padding: 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: #1e1e1e;
+}
+
+.submission-type p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+.submission-note {
+  margin-top: 20px;
+  padding: 18px 22px;
+  border-left: 3px solid #ee626b;
+  background-color: #fafafa;
+  border-radius: 0 10px 10px 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+/* A track's title runs the full width so it stays on one line. Below it the
+   description and the topic list sit side by side, the list in a narrower
+   column and a smaller size because it supports the description. */
+.track {
+  margin-top: 48px;
+  padding-top: 44px;
+  border-top: 1px solid #e7e7e7;
+}
+
+.track-index {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #ee626b;
+}
+
+.track h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: #1e1e1e;
+  text-wrap: balance;
+}
+
+.track-head {
+  margin-bottom: 24px;
+}
+
+.track-body {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  column-gap: 64px;
+  align-items: start;
+}
+
+.track-body > p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+/* A track without a topic list would leave the list column empty, so its
+   description spreads across two text columns instead. */
+@media (min-width: 992px) {
+  .track-body > p:only-child {
+    grid-column: 1 / -1;
+    max-width: none;
+    column-count: 2;
+    column-gap: 64px;
+  }
+}
+
+.track-topics {
+  padding: 22px 26px;
+  border-radius: 14px;
+  background-color: #fafafa;
+}
+
+.topic-label {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #7a7a7a;
+}
+
+.track-body .topic-list {
+  max-width: none;
+  margin: 0;
+  padding: 0 0 0 1.1em;
+  list-style: disc;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #3d3d3d;
+}
+
+/* The template reset sets list-style: none on li itself, so the bullet has to
+   be restored on the item, not only on the list. */
+.track-body .topic-list li {
+  margin: 0;
+  padding-left: 4px;
+  list-style: disc;
+}
+
+.track-body .topic-list li::marker {
+  color: #ee626b;
+}
+
+.track-body .topic-list li + li {
+  margin-top: 10px;
+}
+
+@media (max-width: 991px) {
+  .section.schedule,
+  .section.submission,
+  .section.topics {
+    padding-top: 64px;
+  }
+
+  .split-block {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 24px;
+  }
+
+  .track {
+    margin-top: 36px;
+    padding-top: 32px;
+  }
+
+  .track h3 {
+    font-size: 22px;
+  }
+
+  .track-body {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 28px;
+  }
+
+  .submission-types {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/*
+---------------------------------------------
+Home page
+--------------------------------------------- 
+*/
+
+/* The long introduction used to sit in the banner, capped at 70ch, which left
+   the right half of the banner empty. The banner now carries only the name,
+   place and date, and the introduction has its own section below. */
+.main-banner {
+  padding: 200px 0 190px;
+}
+
+.main-banner .caption p.banner-meta {
+  margin: 0 0 40px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+}
+
+.banner-link {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, .5);
+  padding-bottom: 2px;
+  transition: border-color .2s;
+}
+
+.banner-link:hover,
+.banner-link:focus-visible {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+.section.about {
+  margin-top: 110px;
+}
+
+.split-main > p:not([class]) {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4a4a4a;
+}
+
+.split-main > p:not([class]) + p:not([class]) {
+  margin-top: 1.1em;
+}
+
+/* Four countdown cells took eight of twelve columns and left the rest of the
+   band empty. They now share the content column evenly. */
+.countdown-band {
+  margin-top: 110px;
+  padding: 90px 0;
+}
+
+.countdown-band .split-aside {
+  align-self: center;
+  text-align: left;
+}
+
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.countdown li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 26px 24px;
+  border-radius: 18px;
+  background-color: #fff;
+}
+
+.countdown-value {
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: #1e1e1e;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-unit {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #ee626b;
+}
+
+@media (max-width: 991px) {
+  .main-banner {
+    padding: 150px 0 140px;
+  }
+
+  .banner-actions {
+    justify-content: center;
+  }
+
+  .section.about,
+  .countdown-band {
+    margin-top: 72px;
+  }
+
+  .countdown-band {
+    padding: 56px 0;
+    border-radius: 48px;
+  }
+
+  .countdown {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .countdown-value {
+    font-size: 36px;
+  }
+}
+
+/*
+---------------------------------------------
+Reading comfort
+--------------------------------------------- 
+*/
+
+/* Poppins is a wide face with a small x-height relative to its width, so the
+   15-16px body copy used across the site read small and packed, and 12px labels
+   were close to unreadable. Everything below raises one step on a single scale:
+   18px prose, 17px secondary text, 13-14px labels, with looser leading and more
+   room between blocks. Later rules win, so the earlier sizes can stay put. */
+
+/* Prose */
+.section-heading p,
+.split-main > p:not([class]),
+.track-body > p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #3d3d3d;
+}
+
+.section-heading p,
+.split-main > p:not([class]),
+.track-body > p {
+  max-width: 64ch;
+}
+
+.section-heading p + p,
+.split-main > p:not([class]) + p:not([class]) {
+  margin-top: 1.25em;
+}
+
+/* Headings */
+.section-heading h2 {
+  font-size: 40px;
+  line-height: 1.2;
+}
+
+.split-aside.section-heading p {
+  margin-top: 20px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #5a5a5a;
+}
+
+.track h3 {
+  font-size: 30px;
+}
+
+.track-index,
+.countdown-unit {
+  font-size: 13px;
+}
+
+/* Tracks and topic lists */
+.track {
+  margin-top: 64px;
+  padding-top: 56px;
+}
+
+
+/* Important dates */
+.schedule-list li {
+  padding: 22px 4px;
+}
+
+.schedule-list .milestone {
+  font-size: 18px;
+}
+
+.schedule-list .when {
+  font-size: 16px;
+}
+
+/* Submission types */
+.submission-types {
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.submission-type {
+  padding: 32px;
+}
+
+.submission-type h3 {
+  margin-bottom: 14px;
+  font-size: 21px;
+}
+
+.submission-type p,
+.submission-note {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #3d3d3d;
+}
+
+.submission-note {
+  margin-top: 28px;
+  padding: 22px 26px;
+}
+
+/* Home page banner */
+.main-banner .caption p.banner-meta {
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+.banner-link {
+  font-size: 16px;
+}
+
+/* Committee cards */
+.trending .item.person .down-content {
+  gap: 10px;
+}
+
+.trending .item.person .down-content h4 {
+  font-size: 21px;
+}
+
+.trending .item .down-content span.category {
+  font-size: 15px;
+}
+
+.trending .item.person .down-content .affiliation {
+  font-size: 16px;
+}
+
+.trending .item.person .down-content .track {
+  font-size: 16px;
+}
+
+.trending .item.person .down-content .track span {
+  font-size: 13px;
+}
+
+.trending .item.person .down-content .email,
+.trending .item.person:hover .down-content .email {
+  font-size: 15px;
+}
+
+.trending .item.person .down-content .profile,
+.trending .item.person:hover .down-content .profile {
+  font-size: 15px;
+}
+
+/* Footer */
+footer .footer-sub,
+footer .footer-links a {
+  font-size: 16px;
+}
+
+footer .footer-legal {
+  font-size: 14px;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .split-aside.section-heading h2 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 991px) {
+  .section-heading p,
+  .split-main > p:not([class]),
+  .track-body > p {
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .section-heading h2 {
+    font-size: 32px;
+  }
+
+  .track h3 {
+    font-size: 24px;
+  }
+
+  .track {
+    margin-top: 44px;
+    padding-top: 40px;
+  }
+
+  .submission-type {
+    padding: 26px;
+  }
+
+  .submission-type p,
+  .submission-note {
+    font-size: 16px;
+  }
+}
+
+/*
+---------------------------------------------
+Special session
+--------------------------------------------- 
+*/
+
+.section.special {
+  margin-top: 0;
+  padding-top: 110px;
+}
+
+.section.special .split-aside h6 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  letter-spacing: .1em;
+}
+
+@media (max-width: 991px) {
+  .section.special {
+    padding-top: 64px;
+  }
+}
+
+/* Logo: the VARE headset mark (logo-mark.png, derived from VARE-logo.png as
+   white line art at 3x) next to a live-text wordmark. The template sized a single
+   logo image with max-width rules, so the mark and word get explicit heights
+   here that match the old image in the full, scrolled and mobile headers. */
+.header-area .main-nav .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.header-area .main-nav .logo .logo-mark {
+  width: auto;
+  max-width: none;
+  height: 64px;
+  overflow: visible;
+}
+
+.header-area .main-nav .logo .logo-word {
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .04em;
+  color: #fff;
+}
+
+.header-area .main-nav .logo:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+  border-radius: 6px;
+}
+
+/* Line the logo up with the centre of the nav links in the unscrolled header. */
+@media (min-width: 993px) {
+  .header-area:not(.background-header) .main-nav .logo {
+    margin-top: -2px;
+  }
+
+  .background-header .main-nav .logo {
+    margin-top: 16px;
+  }
+}
+
+.background-header .main-nav .logo .logo-mark {
+  height: 48px;
+}
+
+.background-header .main-nav .logo .logo-word {
+  font-size: 26px;
+}
+
+@media (max-width: 992px) {
+  .header-area .main-nav .logo .logo-mark {
+    height: 48px;
+  }
+
+  .header-area .main-nav .logo .logo-word {
+    font-size: 26px;
+  }
 }
